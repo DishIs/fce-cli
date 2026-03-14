@@ -1,5 +1,6 @@
 # .goreleaser.yaml
 version: 2
+project_name: fce
 
 before:
   hooks:
@@ -67,6 +68,6 @@ chocolateys:
     package_url_prefix: "https://github.com/DishIs/fce-cli/releases/download/{{ .Tag }}"
     description: "FreeCustom.Email CLI — Manage disposable inboxes from your terminal."
     summary: "FreeCustom.Email CLI"
-    icon_url: "https://raw.githubusercontent.com/DishIs/fce-cli/main/logo.png"
+    # icon_url: "https://raw.githubusercontent.com/DishIs/fce-cli/main/logo.png"
     api_key: "{{ .Env.CHOCOLATEY_API_KEY }}"
     source_repo: "https://push.chocolatey.org/"
