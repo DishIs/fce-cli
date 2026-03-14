@@ -43,7 +43,7 @@ changelog:
       - '^docs:'
       - '^test:'
 
-homebrews:
+brews:
   - name: fce
     repository:
       owner: DishIs
