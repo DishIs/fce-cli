@@ -69,4 +69,4 @@ chocolateys:
     project_url: "https://github.com/DishIs/fce-cli"
     description: "FreeCustom.Email CLI — Manage disposable inboxes from your terminal."
     summary: "FreeCustom.Email CLI"
-    # api_key: "{{ .Env.CHOCOLATEY_API_KEY }}"
+    api_key: "{{ .Env.CHOCOLATEY_API_KEY }}"
