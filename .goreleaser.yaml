@@ -62,12 +62,9 @@ scoops:
 
 chocolateys:
   - name: fce
+    owners: DishIs
+    authors: DishIs
     project_url: "https://github.com/DishIs/fce-cli"
-    owners: "DishIs"
-    authors: "DishIs"
-    package_url_prefix: "https://github.com/DishIs/fce-cli/releases/download/{{ .Tag }}"
     description: "FreeCustom.Email CLI — Manage disposable inboxes from your terminal."
     summary: "FreeCustom.Email CLI"
-    # icon_url: "https://raw.githubusercontent.com/DishIs/fce-cli/main/logo.png"
-    api_key: "{{ .Env.CHOCOLATEY_API_KEY }}"
-    source_repo: "https://push.chocolatey.org/"
+    # api_key: "{{ .Env.CHOCOLATEY_API_KEY }}"
