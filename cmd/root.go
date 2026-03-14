@@ -376,12 +376,14 @@ var messagesCmd = &cobra.Command{
 			if !ok {
 				continue
 			}
+			id      := strVal(m, "id")
 			from    := strVal(m, "from")
 			subject := strVal(m, "subject")
 			date    := strVal(m, "date")
 			otp     := strVal(m, "otp")
 
 			display.Table([]display.Row{
+				{Key: "ID",      Value: id},
 				{Key: "From",    Value: from},
 				{Key: "Subject", Value: subject},
 				{Key: "Date",    Value: date},

@@ -116,10 +116,11 @@ func Watch(apiKey, mailbox string) error {
 
 		default:
 			// Email event
+			id   := event.ID
 			otp  := safeStr(event.OTP)
 			link := safeStr(event.VerificationLink)
 			ts   := formatTimestamp(event.Date)
-			display.EmailEvent(event.From, event.Subject, otp, link, ts)
+			display.EmailEvent(id, event.From, event.Subject, otp, link, ts)
 		}
 	}
 }

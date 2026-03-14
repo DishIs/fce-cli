@@ -149,19 +149,27 @@ func PlanBadge(plan string) string {
 
 // ── Live event (for watch) ────────────────────────────────────────────────────
 
-func EmailEvent(from, subject, otp, link string, timestamp string) {
+func EmailEvent(id, from, subject, otp, link string, timestamp string) {
 	div   := styleDim.Render(strings.Repeat("─", 52))
 	fmt.Println()
 	fmt.Println(div)
+	fmt.Printf("  %s  %s\n", styleDim.Render("ID  "), styleDim.Render(id))
 	fmt.Printf("  %s  %s\n", styleDim.Render("FROM"), styleBright.Render(from))
 	fmt.Printf("  %s  %s\n", styleDim.Render("SUBJ"), styleMuted.Render(subject))
 	fmt.Printf("  %s  %s\n", styleDim.Render("TIME"), styleDim.Render(timestamp))
-	if otp != "" && otp != "__DETECTED__" && otp != "null" {
+	if otp != "" {
 		otpVal := styleAccent.Render(otp)
 		fmt.Printf("  %s  %s\n", styleBright.Render("OTP "), otpVal)
 	}
-	if link != "" && link != "null" {
-		fmt.Printf("  %s  %s\n", styleDim.Render("LINK"), styleDim.Render(link))
+	if link != "" {
+		// Render as a "button" like link
+		button := lipgloss.NewStyle().
+			Foreground(lipgloss.Color("0")).
+			Background(lipgloss.Color("255")).
+			Padding(0, 1).
+			Bold(true).
+			Render("OPEN EMAIL")
+		fmt.Printf("\n  %s  %s\n", button, styleDim.Render(link))
 	}
 	fmt.Println(div)
 	fmt.Println()

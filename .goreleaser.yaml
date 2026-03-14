@@ -68,7 +68,16 @@ chocolateys:
   - name: fce
     owners: DishIs
     authors: DishIs
+    title: "FreeCustom.Email CLI"
+    description: "Manage disposable inboxes, extract OTPs, and stream real-time email events from your terminal."
+    summary: "FreeCustom.Email CLI — Disposable Email API"
     project_url: "https://github.com/DishIs/fce-cli"
-    description: "FreeCustom.Email CLI — Manage disposable inboxes from your terminal."
-    summary: "FreeCustom.Email CLI"
+    icon_url: "https://github.com/DishIs.png"
+    license_url: "https://github.com/DishIs/fce-cli/blob/main/LICENSE"
+    docs_url: "https://github.com/DishIs/fce-cli/blob/main/README.md"
+    bug_tracker_url: "https://github.com/DishIs/fce-cli/issues"
+    package_source_url: "https://github.com/DishIs/fce-cli"
+    project_source_url: "https://github.com/DishIs/fce-cli"
+    release_notes: "https://github.com/DishIs/fce-cli/releases/tag/{{ .Tag }}"
+    tags: "cli email disposable-email otp websocket"
     api_key: "{{ .Env.CHOCOLATEY_API_KEY }}"
