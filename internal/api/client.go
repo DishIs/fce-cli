@@ -136,6 +136,18 @@ func (c *Client) ListMessages(inbox string) ([]interface{}, error) {
 	return data, nil
 }
 
+func (c *Client) GetMessage(inbox, id string) (map[string]interface{}, error) {
+	result, err := c.get("/inboxes/" + inbox + "/messages/" + id)
+	if err != nil {
+		return nil, err
+	}
+	data, _ := result["data"].(map[string]interface{})
+	if data == nil {
+		data = result
+	}
+	return data, nil
+}
+
 func (c *Client) GetOTP(inbox string) (map[string]interface{}, error) {
 	return c.get("/inboxes/" + inbox + "/otp")
 }

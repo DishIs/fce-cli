@@ -347,18 +347,33 @@ func init() {
 // ── fce messages ──────────────────────────────────────────────────────────────
 
 var messagesCmd = &cobra.Command{
-	Use:     "messages <inbox>",
+	Use:     "messages <inbox> [id]",
 	Aliases: []string{"msgs", "mail"},
-	Short:   "List messages in an inbox",
-	Example: `  fce messages mytest@ditmail.info`,
-	Args:    cobra.ExactArgs(1),
+	Short:   "List messages in an inbox or view a specific message",
+	Example: `  fce messages mytest@ditmail.info
+  fce messages mytest@ditmail.info u7hPpV5sA`,
+	Args:    cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		client, err := requireAuth()
 		if err != nil {
 			return err
 		}
 
-		msgs, err := client.ListMessages(args[0])
+		inbox := args[0]
+
+		// View specific message
+		if len(args) > 1 {
+			id := args[1]
+			msg, err := client.GetMessage(inbox, id)
+			if err != nil {
+				return err
+			}
+			display.MessageContent(msg)
+			return nil
+		}
+
+		// List messages
+		msgs, err := client.ListMessages(inbox)
 		if err != nil {
 			return err
 		}
@@ -368,7 +383,7 @@ var messagesCmd = &cobra.Command{
 			return nil
 		}
 
-		display.Header(fmt.Sprintf("Messages in %s  (%d)", args[0], len(msgs)))
+		display.Header(fmt.Sprintf("Messages in %s  (%d)", inbox, len(msgs)))
 		fmt.Println()
 
 		for _, item := range msgs {

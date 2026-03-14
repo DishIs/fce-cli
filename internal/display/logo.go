@@ -175,6 +175,34 @@ func EmailEvent(id, from, subject, otp, link string, timestamp string) {
 	fmt.Println()
 }
 
+func MessageContent(data map[string]interface{}) {
+	from    := fmt.Sprintf("%v", data["from"])
+	subject := fmt.Sprintf("%v", data["subject"])
+	date    := fmt.Sprintf("%v", data["date"])
+	body    := fmt.Sprintf("%v", data["body"])
+	text    := fmt.Sprintf("%v", data["text"])
+	html    := fmt.Sprintf("%v", data["html"])
+
+	Header("Message Details")
+	Table([]Row{
+		{Key: "From",    Value: from},
+		{Key: "Subject", Value: subject},
+		{Key: "Date",    Value: date},
+	})
+
+	if text != "" && text != "<nil>" {
+		fmt.Println("\n" + styleDim.Render("── Text Content ──────────────────────────────────────────────"))
+		fmt.Println(text)
+	} else if body != "" && body != "<nil>" {
+		fmt.Println("\n" + styleDim.Render("── Body ──────────────────────────────────────────────────────"))
+		fmt.Println(body)
+	} else if html != "" && html != "<nil>" {
+		fmt.Println("\n" + styleDim.Render("── HTML (Source) ─────────────────────────────────────────────"))
+		fmt.Println(html)
+	}
+	fmt.Println()
+}
+
 // ── Waiting spinner (simple) ──────────────────────────────────────────────────
 
 func Waiting(msg string) {
