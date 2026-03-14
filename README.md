@@ -21,7 +21,24 @@ Manage disposable inboxes, extract OTPs, and stream real-time email events from 
 
 **macOS/Linux (Homebrew)**
 ```bash
-brew install DishIs/tap/fce
+brew tap DishIs/homebrew-tap
+brew install fce
+```
+
+**Windows (Scoop)**
+```powershell
+scoop bucket add fce https://github.com/DishIs/scoop-bucket
+scoop install fce
+```
+
+**Windows (Chocolatey)**
+```powershell
+choco install fce
+```
+
+**Shell Script (macOS/Linux)**
+```bash
+curl -sSfL https://raw.githubusercontent.com/DishIs/fce-cli/main/scripts/install.sh | sh
 ```
 
 **Go install**

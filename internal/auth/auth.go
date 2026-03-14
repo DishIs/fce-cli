@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	loginBaseURL   = "https://freecustom.email/api/cli-auth"
+	loginBaseURL   = "https://www.freecustom.email/api/cli-auth"
 	callbackPort   = 9876
 	callbackPath   = "/callback"
 	timeoutSeconds = 120
