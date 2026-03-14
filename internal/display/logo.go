@@ -38,26 +38,21 @@ var (
 // ASCII recreation of the FreeCustom.Email envelope-in-circle logo
 
 const logoASCII = `
-    ╭─────────────────────╮
-    │  ╭───────────────╮  │
-    │  │ ╲           ╱ │  │
-    │  │   ╲       ╱   │  │
-    │  │     ╲   ╱     │  │
-    │  │      ╲╱       │  │
-    │  │               │  │
-    │  ╰───────────────╯  │
-    ╰─────────────────────╯`
+ ______             _____           _                    _____                _ _ 
+ |  ___|           /  __ \         | |                  |  ___|              (_) |
+ | |_ _ __ ___  ___| /  \/_   _ ___| |_ ___  _ __ ___   | |__ _ __ ___   __ _ _| |
+ |  _| '__/ _ \/ _ \ |   | | | / __| __/ _ \| '_ ` _ \  |  __| '_ ` _ \ / _` | | |
+ | | | | | |  __/  __/ \__/\ |_| \__ \ || (_) | | | | | |_| |__| | | | | | (_| | | |
+ \_| |_|  \___|\___|\____/\__,_|___/\__\___/|_| |_| |_(_)____/_| |_| |_|\__,_|_|_|
+`
 
-const wordmark = `  FreeCustom.Email`
-const tagline  = `  disposable inbox API`
+const tagline = `   FreeCustom.Email — disposable inbox API`
 
 // PrintLogo prints the full logo + wordmark on first login
 func PrintLogo() {
 	logo := styleBright.Render(logoASCII)
-	wm   := styleBright.Render(wordmark)
-	tag  := styleMuted.Render(tagline)
+	tag := styleMuted.Render(tagline)
 	fmt.Println(logo)
-	fmt.Println(wm)
 	fmt.Println(tag)
 	fmt.Println()
 }
