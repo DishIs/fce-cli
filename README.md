@@ -46,6 +46,34 @@ curl -sSfL https://raw.githubusercontent.com/DishIs/fce-cli/main/scripts/install
 go install github.com/DishIs/fce-cli@latest
 ```
 
+---
+
+## Update
+
+When a new version is released, you can update the CLI using your package manager:
+
+**Homebrew**
+```bash
+brew update
+brew upgrade fce
+```
+
+**Scoop**
+```powershell
+scoop update fce
+```
+
+**Chocolatey**
+```powershell
+choco upgrade fce
+```
+
+**Shell Script**
+Simply re-run the installation command:
+```bash
+curl -sSfL https://raw.githubusercontent.com/DishIs/fce-cli/main/scripts/install.sh | sh
+```
+
 Or download a binary from [Releases](https://github.com/DishIs/fce-cli/releases).
 
 ---

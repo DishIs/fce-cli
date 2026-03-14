@@ -15,6 +15,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	Version = "dev"
+	Commit  = "none"
+	Date    = "unknown"
+)
+
 // ── Root command ──────────────────────────────────────────────────────────────
 
 var rootCmd = &cobra.Command{
@@ -55,7 +61,18 @@ func init() {
 		messagesCmd,
 		otpCmd,
 		domainsCmd,
+		versionCmd,
 	)
+}
+
+// ── fce version ───────────────────────────────────────────────────────────────
+
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "Show version info",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf("fce %s (%s) %s\n", Version, Commit, Date)
+	},
 }
 
 // ── fce login ─────────────────────────────────────────────────────────────────
