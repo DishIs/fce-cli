@@ -19,19 +19,9 @@ Manage disposable inboxes, extract OTPs, and stream real-time email events from 
 
 ## Install
 
-**macOS (Homebrew)**
+**macOS/Linux (Homebrew)**
 ```bash
-brew install freecustomemail/tap/fce
-```
-
-**Linux / macOS (curl)**
-```bash
-curl -fsSL https://freecustom.email/cli/install.sh | sh
-```
-
-**Windows (PowerShell)**
-```powershell
-iwr https://freecustom.email/cli/install.ps1 | iex
+brew install DishIs/tap/fce
 ```
 
 **Go install**
