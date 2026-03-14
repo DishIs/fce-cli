@@ -21,11 +21,13 @@ builds:
 
 archives:
   - id: fce
-    format: tar.gz
+    formats:
+      - tar.gz
     # use zip for windows archives
     format_overrides:
       - goos: windows
-        format: zip
+        formats:
+          - zip
     name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
 
 checksum:
@@ -41,7 +43,7 @@ changelog:
       - '^docs:'
       - '^test:'
 
-brews:
+homebrews:
   - name: fce
     repository:
       owner: DishIs
