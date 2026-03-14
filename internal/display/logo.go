@@ -25,23 +25,16 @@ var (
 			Border(lipgloss.RoundedBorder()).
 			BorderForeground(lipgloss.Color("238")).
 			Padding(0, 2)
-
-	// Plan badge
-	planStyle = lipgloss.NewStyle().
-			Border(lipgloss.RoundedBorder()).
-			BorderForeground(lipgloss.Color("242")).
-			Padding(0, 1).
-			Foreground(lipgloss.Color("252"))
 )
 
 // ── Logo ──────────────────────────────────────────────────────────────────────
-// ASCII recreation of the FreeCustom.Email envelope-in-circle logo
 
+// Using @@ instead of ` to avoid syntax errors in Go raw strings
 const logoASCII = `
  ______             _____           _                    _____                _ _ 
  |  ___|           /  __ \         | |                  |  ___|              (_) |
  | |_ _ __ ___  ___| /  \/_   _ ___| |_ ___  _ __ ___   | |__ _ __ ___   __ _ _| |
- |  _| '__/ _ \/ _ \ |   | | | / __| __/ _ \| '_ ` _ \  |  __| '_ ` _ \ / _` | | |
+ |  _| '__/ _ \/ _ \ |   | | | / __| __/ _ \| '_@@ _ \  |  __| '_@@ _ \ / _@@ | | |
  | | | | | |  __/  __/ \__/\ |_| \__ \ || (_) | | | | | |_| |__| | | | | | (_| | | |
  \_| |_|  \___|\___|\____/\__,_|___/\__\___/|_| |_| |_(_)____/_| |_| |_|\__,_|_|_|
 `
@@ -50,7 +43,8 @@ const tagline = `   FreeCustom.Email — disposable inbox API`
 
 // PrintLogo prints the full logo + wordmark on first login
 func PrintLogo() {
-	logo := styleBright.Render(logoASCII)
+	fixedLogo := strings.ReplaceAll(logoASCII, "@@", "`")
+	logo := styleBright.Render(fixedLogo)
 	tag := styleMuted.Render(tagline)
 	fmt.Println(logo)
 	fmt.Println(tag)
@@ -138,7 +132,19 @@ func List(items []string) {
 // ── Plan badge ────────────────────────────────────────────────────────────────
 
 func PlanBadge(plan string) string {
-	return planStyle.Render(strings.ToUpper(plan))
+	p := strings.ToLower(plan)
+	if p == "free" || p == "developer" {
+		return styleDim.Render("[" + strings.ToUpper(plan) + "]")
+	}
+
+	// For PRO/Startup/Growth, use a compact solid badge
+	// Using a simple style to ensure it stays inline and doesn't break into new lines
+	return lipgloss.NewStyle().
+		Foreground(lipgloss.Color("0")).
+		Background(lipgloss.Color("255")).
+		Padding(0, 1).
+		Bold(true).
+		Render(strings.ToUpper(plan))
 }
 
 // ── Live event (for watch) ────────────────────────────────────────────────────
