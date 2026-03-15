@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"os/exec"
 	"strings"
 	"time"
 
@@ -62,7 +63,66 @@ func init() {
 		otpCmd,
 		domainsCmd,
 		versionCmd,
+		devCmd,
+		updateCmd,
 	)
+}
+
+// ── fce dev ───────────────────────────────────────────────────────────────────
+
+var devCmd = &cobra.Command{
+	Use:   "dev",
+	Short: "Instantly register a dev inbox and start watching for emails",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		client, err := requireAuth()
+		if err != nil {
+			return err
+		}
+
+		inbox := devInbox()
+		display.Info(fmt.Sprintf("Temporary inbox: %s", inbox))
+
+		if _, err := client.RegisterInbox(inbox); err != nil {
+			return fmt.Errorf("failed to register inbox: %w", err)
+		}
+
+		display.Success("Watching for emails...")
+		fmt.Println()
+
+		return ws.Watch(client.GetAPIKey(), inbox)
+	},
+}
+
+// ── fce update ────────────────────────────────────────────────────────────────
+
+var updateCmd = &cobra.Command{
+	Use:   "update",
+	Short: "Update the CLI to the latest version",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		display.Info("Checking for updates...")
+		
+		installCmd := "curl -fsSL https://raw.githubusercontent.com/DishIs/fce-cli/main/scripts/install.sh | sh"
+		fmt.Printf("Running installer: %s\n", installCmd)
+		
+		// Execute the installation command
+		var c *exec.Cmd
+		if os.Getenv("OS") == "Windows_NT" {
+			display.Warn("Auto-update on Windows is currently best handled via Scoop or Chocolatey.")
+			fmt.Println("Try: scoop update fce  OR  choco upgrade fce")
+			return nil
+		} else {
+			c = exec.Command("sh", "-c", installCmd)
+		}
+		
+		c.Stdout = os.Stdout
+		c.Stderr = os.Stderr
+		if err := c.Run(); err != nil {
+			return fmt.Errorf("update failed: %w", err)
+		}
+		
+		display.Success("Update complete!")
+		return nil
+	},
 }
 
 // ── fce version ───────────────────────────────────────────────────────────────
@@ -568,4 +628,15 @@ func randomInbox() string {
 	n      := rng.Intn(9000) + 1000
 	domain := randomDomains[rng.Intn(len(randomDomains))]
 	return strings.ToLower(fmt.Sprintf("%s%s%d@%s", adj, noun, n, domain))
+}
+
+func devInbox() string {
+	rng    := rand.New(rand.NewSource(time.Now().UnixNano()))
+	chars  := "abcdefghijklmnopqrstuvwxyz0123456789"
+	suffix := make([]byte, 4)
+	for i := range suffix {
+		suffix[i] = chars[rng.Intn(len(chars))]
+	}
+	domain := randomDomains[rng.Intn(len(randomDomains))]
+	return fmt.Sprintf("dev-%s@%s", string(suffix), domain)
 }

@@ -19,6 +19,12 @@ Manage disposable inboxes, extract OTPs, and stream real-time email events from 
 
 ## Install
 
+```bash
+curl -fsSL freecustom.email/install.sh | sh
+```
+
+*(Or use your preferred package manager below)*
+
 **macOS/Linux (Homebrew)**
 ```bash
 brew tap DishIs/homebrew-tap
