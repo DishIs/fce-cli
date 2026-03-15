@@ -76,7 +76,7 @@ choco upgrade fce
 
 **NPM**
 ```bash
-npm install -g fce-cli@latest
+npm install -g fcemail@latest
 ```
 
 **Shell Script**
@@ -101,8 +101,8 @@ To remove the CLI and all local configuration:
    - **Homebrew**: `brew uninstall fce`
    - **Scoop**: `scoop uninstall fce`
    - **Choco**: `choco uninstall fce`
-   - **NPM**: `npm uninstall -g fce-cli`
-   - **Manual**: `sudo rm /usr/local/bin/fce`
+    - **NPM**: `npm uninstall -g fcemail`
+    - **Manual**: `sudo rm /usr/local/bin/fce`
 
 Or download a binary from [Releases](https://github.com/DishIs/fce-cli/releases).
 

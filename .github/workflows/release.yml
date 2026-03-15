@@ -51,7 +51,7 @@ jobs:
           VERSION=${GITHUB_REF#refs/tags/v}
           cat <<EOF > package.json
           {
-            "name": "fce-cli",
+            "name": "fcemail",
             "version": "${VERSION}",
             "description": "FreeCustom.Email CLI — Manage disposable inboxes from your terminal.",
             "bin": {
@@ -70,6 +70,7 @@ jobs:
           EOF
           # Create a minimal install script for NPM users
           mkdir -p bin
+          touch bin/fce
           mkdir -p scripts
           cat <<EOF > scripts/install-binary.js
           const { execSync } = require('child_process');
