@@ -226,3 +226,17 @@ func PlanGate(requiredPlan string, feature string) {
 func Divider() {
 	fmt.Println(styleDim.Render("  " + strings.Repeat("─", 48)))
 }
+
+// TableBadge returns a formatted string with a badge and value
+func TableBadge(label, value string) string {
+	badge := lipgloss.NewStyle().
+		Foreground(lipgloss.AdaptiveColor{Light: "255", Dark: "0"}).
+		Background(lipgloss.AdaptiveColor{Light: "244", Dark: "240"}).
+		Padding(0, 1).
+		Bold(true).
+		Width(10).
+		Align(lipgloss.Center).
+		Render(strings.ToUpper(label))
+
+	return fmt.Sprintf("  %s  %s", badge, styleBright.Render(value))
+}

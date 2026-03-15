@@ -103,3 +103,10 @@ func SaveConfig(cfg *Config) error {
 	}
 	return os.WriteFile(configPath(), data, 0600)
 }
+
+// Purge removes all local configuration and credentials
+func Purge() error {
+	_ = DeleteAPIKey()
+	_ = os.RemoveAll(configDir())
+	return nil
+}

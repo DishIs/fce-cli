@@ -65,7 +65,43 @@ func init() {
 		versionCmd,
 		devCmd,
 		updateCmd,
+		uninstallCmd,
 	)
+}
+
+// ── fce uninstall ─────────────────────────────────────────────────────────────
+
+var uninstallCmd = &cobra.Command{
+	Use:   "uninstall",
+	Short: "Remove all local configuration and credentials",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		fmt.Print("Are you sure you want to remove all local configuration and logout? (y/N): ")
+		var confirm string
+		fmt.Scanln(&confirm)
+		if strings.ToLower(confirm) != "y" {
+			display.Info("Aborted.")
+			return nil
+		}
+
+		if err := config.Purge(); err != nil {
+			return err
+		}
+
+		display.Success("Local configuration and credentials cleared.")
+		
+		// Platform-specific instructions
+		display.Header("Next Steps")
+		fmt.Println("To completely remove the fce binary, run the command for your platform:")
+		fmt.Println()
+		fmt.Println(display.TableBadge("Homebrew", "brew uninstall fce"))
+		fmt.Println(display.TableBadge("Scoop",    "scoop uninstall fce"))
+		fmt.Println(display.TableBadge("Choco",    "choco uninstall fce"))
+		fmt.Println(display.TableBadge("NPM",      "npm uninstall -g fce-cli"))
+		fmt.Println(display.TableBadge("Manual",   "sudo rm /usr/local/bin/fce"))
+		fmt.Println()
+		
+		return nil
+	},
 }
 
 // ── fce dev ───────────────────────────────────────────────────────────────────

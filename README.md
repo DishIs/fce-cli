@@ -74,11 +74,35 @@ scoop update fce
 choco upgrade fce
 ```
 
-**Shell Script**
-Simply re-run the installation command:
+**NPM**
 ```bash
-curl -sSfL https://raw.githubusercontent.com/DishIs/fce-cli/main/scripts/install.sh | sh
+npm install -g fce-cli@latest
 ```
+
+**Shell Script**
+Simply re-run the installation command or use the built-in update:
+```bash
+fce update
+```
+
+---
+
+## Uninstall
+
+To remove the CLI and all local configuration:
+
+1. **Clear Config & Credentials**
+   ```bash
+   fce uninstall
+   ```
+   *(This clears your API key and local cache)*
+
+2. **Remove the Binary**
+   - **Homebrew**: `brew uninstall fce`
+   - **Scoop**: `scoop uninstall fce`
+   - **Choco**: `choco uninstall fce`
+   - **NPM**: `npm uninstall -g fce-cli`
+   - **Manual**: `sudo rm /usr/local/bin/fce`
 
 Or download a binary from [Releases](https://github.com/DishIs/fce-cli/releases).
 
