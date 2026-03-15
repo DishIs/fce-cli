@@ -24,6 +24,9 @@ case "$ARCH" in
   *)      echo "Unsupported architecture: $ARCH"; exit 1;;
 esac
 
+# Allow overriding install directory (useful for NPM)
+INSTALL_DIR=${BIN_DIR:-"/usr/local/bin"}
+
 echo "Installing $BINARY_NAME for $OS/$ARCH..."
 
 # Get latest version and download URL
@@ -48,9 +51,15 @@ else
   tar -xzf "$TMP_DIR/archive" -C "$TMP_DIR"
 fi
 
-# Move to /usr/local/bin
-echo "Installing to /usr/local/bin/$BINARY_NAME (requires sudo)..."
-sudo mv "$TMP_DIR/$BINARY_NAME" /usr/local/bin/
+# Move to install directory
+if [ "$INSTALL_DIR" = "./bin" ]; then
+  mkdir -p "$INSTALL_DIR"
+  mv "$TMP_DIR/$BINARY_NAME" "$INSTALL_DIR/"
+  echo "Successfully installed $BINARY_NAME to $INSTALL_DIR!"
+else
+  echo "Installing to $INSTALL_DIR/$BINARY_NAME (requires sudo)..."
+  sudo mv "$TMP_DIR/$BINARY_NAME" "$INSTALL_DIR/"
+  echo "Successfully installed $BINARY_NAME!"
+fi
 
-echo "Successfully installed $BINARY_NAME!"
-$BINARY_NAME version || echo "Installation complete. Run '$BINARY_NAME' to get started."
+$BINARY_NAME version || "$INSTALL_DIR/$BINARY_NAME" version || echo "Installation complete."

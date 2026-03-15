@@ -81,13 +81,3 @@ chocolateys:
     release_notes: "https://github.com/DishIs/fce-cli/releases/tag/{{ .Tag }}"
     tags: "cli email disposable-email otp websocket"
     api_key: "{{ .Env.CHOCOLATEY_API_KEY }}"
-
-npms:
-  - name: fce-cli
-    repository:
-      owner: DishIs
-      name: fce-cli
-    homepage: "https://github.com/DishIs/fce-cli"
-    description: "FreeCustom.Email CLI — Manage disposable inboxes from your terminal."
-    license: MIT
-    tag_template: "{{.Version}}"
