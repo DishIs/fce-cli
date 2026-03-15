@@ -38,7 +38,7 @@ var rootCmd = &cobra.Command{
     fce watch random     Watch a random inbox for emails
     fce status           View your account and plan
 
-  Docs: https://freecustom.email/api/docs
+  Docs: https://www.freecustom.email/api/cli
 `,
 	SilenceUsage:  true,
 	SilenceErrors: true,

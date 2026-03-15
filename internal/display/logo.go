@@ -217,7 +217,7 @@ func Waiting(msg string) {
 func PlanGate(requiredPlan string, feature string) {
 	fmt.Println()
 	Error(fmt.Sprintf("%s requires %s plan or above.", feature, strings.Title(requiredPlan)))
-	Info("Upgrade at: https://freecustom.email/api/pricing")
+	Info("Upgrade at: https://www.freecustom.email/api/pricing")
 	fmt.Println()
 }
 

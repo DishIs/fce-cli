@@ -164,7 +164,7 @@ fce inbox ls
 
 ## Authentication
 
-`fce login` opens your browser to `freecustom.email`. Sign in with GitHub, Google, or a magic link — a new API key is created and stored securely in your OS keychain (macOS Keychain, Windows Credential Manager, Linux Secret Service / libsecret).
+`fce login` opens your browser to `www.freecustom.email`. Sign in with GitHub, Google, or a magic link — a new API key is created and stored securely in your OS keychain (macOS Keychain, Windows Credential Manager, Linux Secret Service / libsecret).
 
 You can also set the `FCE_API_KEY` environment variable to skip the keychain entirely — useful in CI:
 
@@ -183,7 +183,7 @@ fce status
 | `fce watch` (WebSocket) | ✗ | ✗ | ✓ | ✓ | ✓ |
 | `fce otp` | ✗ | ✗ | ✗ | ✓ | ✓ |
 
-Upgrade at: https://freecustom.email/api/pricing
+Upgrade at: https://www.freecustom.email/api/pricing
 
 ---
 
