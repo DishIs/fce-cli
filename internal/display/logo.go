@@ -10,33 +10,38 @@ import (
 // ── Styles ────────────────────────────────────────────────────────────────────
 
 var (
-	// Neutral palette — works on both light and dark terminals
-	styleDim     = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
-	styleBright  = lipgloss.NewStyle().Foreground(lipgloss.Color("255")).Bold(true)
-	styleMuted   = lipgloss.NewStyle().Foreground(lipgloss.Color("245"))
-	styleAccent  = lipgloss.NewStyle().Foreground(lipgloss.Color("255")).Bold(true)
-	styleBorder  = lipgloss.NewStyle().Foreground(lipgloss.Color("238"))
-	styleSuccess = lipgloss.NewStyle().Foreground(lipgloss.Color("255"))
-	styleError   = lipgloss.NewStyle().Foreground(lipgloss.Color("255")).Bold(true)
-	styleWarn    = lipgloss.NewStyle().Foreground(lipgloss.Color("250"))
+	// Adaptive colors for both light and dark terminals
+	colorDim    = lipgloss.AdaptiveColor{Light: "244", Dark: "240"}
+	colorBright = lipgloss.AdaptiveColor{Light: "235", Dark: "255"}
+	colorMuted  = lipgloss.AdaptiveColor{Light: "248", Dark: "245"}
+	colorAccent = lipgloss.AdaptiveColor{Light: "232", Dark: "255"}
+	colorBorder = lipgloss.AdaptiveColor{Light: "250", Dark: "238"}
 
-	// Box style for info panels
+	styleDim     = lipgloss.NewStyle().Foreground(colorDim)
+	styleBright  = lipgloss.NewStyle().Foreground(colorBright).Bold(true)
+	styleMuted   = lipgloss.NewStyle().Foreground(colorMuted)
+	styleAccent  = lipgloss.NewStyle().Foreground(colorAccent).Bold(true)
+	styleBorder  = lipgloss.NewStyle().Foreground(colorBorder)
+	styleSuccess = lipgloss.NewStyle().Foreground(colorBright)
+	styleError   = lipgloss.NewStyle().Foreground(colorBright).Bold(true)
+	styleWarn    = lipgloss.NewStyle().Foreground(colorDim)
+
 	panelStyle = lipgloss.NewStyle().
 			Border(lipgloss.RoundedBorder()).
-			BorderForeground(lipgloss.Color("238")).
+			BorderForeground(colorBorder).
 			Padding(0, 2)
 )
 
 // ── Logo ──────────────────────────────────────────────────────────────────────
 
-// Using @@ instead of ` to avoid syntax errors in Go raw strings
+// ASCII logo optimized for readability and Go raw string constraints
+// Using @@ as a placeholder for backticks
 const logoASCII = `
- ______             _____           _                    _____                _ _ 
- |  ___|           /  __ \         | |                  |  ___|              (_) |
- | |_ _ __ ___  ___| /  \/_   _ ___| |_ ___  _ __ ___   | |__ _ __ ___   __ _ _| |
- |  _| '__/ _ \/ _ \ |   | | | / __| __/ _ \| '_@@ _ \  |  __| '_@@ _ \ / _@@ | | |
- | | | | | |  __/  __/ \__/\ |_| \__ \ || (_) | | | | | |_| |__| | | | | | (_| | | |
- \_| |_|  \___|\___|\____/\__,_|___/\__\___/|_| |_| |_(_)____/_| |_| |_|\__,_|_|_|
+    ______              ______           __                     ______                _ __
+   / ____/________ ___ / ____/_  _______/ /_____  ____ ___     / ____/___ ___  ____ _(_) /
+  / /_  / ___/ _ \/ _ \ /   / / / / ___/ __/ __ \/ __ @@__ \   / __/ / __ @@__ \/ __ @@/ / / 
+ / __/ / /  /  __/  __/ /___/ /_/ (__  ) /_/ /_/ / / / / / /  / /___/ / / / / / /_/ / / /  
+/_/   /_/   \___/\___/\____/\__,_/____/\__/\____/_/ /_/ /_/  /_____/_/ /_/ /_/\__,_/_/_/   
 `
 
 const tagline = `   FreeCustom.Email — disposable inbox API`
@@ -137,11 +142,10 @@ func PlanBadge(plan string) string {
 		return styleDim.Render("[" + strings.ToUpper(plan) + "]")
 	}
 
-	// For PRO/Startup/Growth, use a compact solid badge
-	// Using a simple style to ensure it stays inline and doesn't break into new lines
+	// High visibility solid badge for paid plans
 	return lipgloss.NewStyle().
-		Foreground(lipgloss.Color("0")).
-		Background(lipgloss.Color("255")).
+		Foreground(lipgloss.AdaptiveColor{Light: "255", Dark: "0"}).
+		Background(lipgloss.AdaptiveColor{Light: "235", Dark: "255"}).
 		Padding(0, 1).
 		Bold(true).
 		Render(strings.ToUpper(plan))
@@ -162,10 +166,9 @@ func EmailEvent(id, from, subject, otp, link string, timestamp string) {
 		fmt.Printf("  %s  %s\n", styleBright.Render("OTP "), otpVal)
 	}
 	if link != "" {
-		// Render as a "button" like link
 		button := lipgloss.NewStyle().
-			Foreground(lipgloss.Color("0")).
-			Background(lipgloss.Color("255")).
+			Foreground(lipgloss.AdaptiveColor{Light: "255", Dark: "0"}).
+			Background(lipgloss.AdaptiveColor{Light: "235", Dark: "255"}).
 			Padding(0, 1).
 			Bold(true).
 			Render("OPEN EMAIL")
@@ -179,8 +182,8 @@ func MessageContent(data map[string]interface{}) {
 	from    := fmt.Sprintf("%v", data["from"])
 	subject := fmt.Sprintf("%v", data["subject"])
 	date    := fmt.Sprintf("%v", data["date"])
-	body    := fmt.Sprintf("%v", data["body"])
 	text    := fmt.Sprintf("%v", data["text"])
+	body    := fmt.Sprintf("%v", data["body"])
 	html    := fmt.Sprintf("%v", data["html"])
 
 	Header("Message Details")
