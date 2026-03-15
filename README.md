@@ -135,10 +135,14 @@ fce watch mytest@ditmail.info
 | `fce inbox add <addr>` | Register a new inbox | Any |
 | `fce inbox add random` | Register a random inbox | Any |
 | `fce inbox remove <addr>` | Unregister an inbox | Any |
-| `fce messages <inbox>` | List messages in an inbox | Any |
+| `fce messages <inbox> [id]` | List messages or view a specific message | Any |
 | `fce domains` | List available domains | Any |
 | `fce watch [inbox\|random]` | Stream emails via WebSocket | **Startup+** |
 | `fce otp <inbox>` | Get latest OTP from an inbox | **Growth+** |
+| `fce dev` | Instantly register a dev inbox and start watching | Any |
+| `fce update` | Update the CLI to the latest version | Any |
+| `fce uninstall` | Remove all local config and credentials | Any |
+| `fce version` | Show version info | Any |
 
 ### Examples
 
