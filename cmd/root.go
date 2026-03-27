@@ -292,7 +292,7 @@ var watchCmd = &cobra.Command{
 
   fce watch                        Watch all registered inboxes
   fce watch random                 Watch a new random inbox (auto-registers)
-  fce watch test@ditmail.info      Watch a specific inbox
+  fce watch test@junkstopper.info      Watch a specific inbox
 
 Requires Startup plan or above. Emails arrive in under 200ms.`,
 	Example: `  fce watch
@@ -388,7 +388,7 @@ var inboxAddCmd = &cobra.Command{
 	Use:     "add <address>",
 	Aliases: []string{"register"},
 	Short:   "Register a new inbox",
-	Example: `  fce inbox add mytest@ditmail.info
+	Example: `  fce inbox add mytest@junkstopper.info
   fce inbox add random`,
 	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -446,8 +446,8 @@ var messagesCmd = &cobra.Command{
 	Use:     "messages <inbox> [id]",
 	Aliases: []string{"msgs", "mail"},
 	Short:   "List messages in an inbox or view a specific message",
-	Example: `  fce messages mytest@ditmail.info
-  fce messages mytest@ditmail.info u7hPpV5sA`,
+	Example: `  fce messages mytest@junkstopper.info
+  fce messages mytest@junkstopper.info u7hPpV5sA`,
 	Args:    cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		client, err := requireAuth()
@@ -521,7 +521,7 @@ var otpCmd = &cobra.Command{
 OTP is extracted automatically — no regex needed.
 
 Requires Growth plan or above.`,
-	Example: `  fce otp mytest@ditmail.info`,
+	Example: `  fce otp mytest@junkstopper.info`,
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		client, err := requireAuth()
@@ -643,7 +643,7 @@ func intVal(m map[string]interface{}, key string) int {
 
 // randomInbox generates a random inbox address using a free-tier domain
 var randomDomains = []string{
-	"ditube.info", "ditmail.info", "ditapi.info",
+	"ditube.info", "junkstopper.info", "ditapi.info",
 	"ditgame.info", "ditplay.info", "ditcloud.info",
 }
 
