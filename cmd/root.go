@@ -51,7 +51,22 @@ func Execute() {
 	}
 }
 
+var (
+	GlobalFormat string
+	GlobalLimit  int
+	GlobalSilent bool
+)
+
 func init() {
+	rootCmd.PersistentFlags().StringVarP(&GlobalFormat, "format", "f", "text", "Output format (text, json, csv)")
+	rootCmd.PersistentFlags().IntVarP(&GlobalLimit, "limit", "l", 0, "Limit the number of results (0 for all)")
+	rootCmd.PersistentFlags().BoolVarP(&GlobalSilent, "silent", "s", false, "Suppress non-essential output")
+
+	rootCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
+		display.GlobalFormat = GlobalFormat
+		display.GlobalSilent = GlobalSilent
+	}
+
 	rootCmd.AddCommand(
 		loginCmd,
 		logoutCmd,
@@ -223,6 +238,8 @@ var statusCmd = &cobra.Command{
 		apiInboxes  := fmt.Sprintf("%v", intVal(d, "api_inbox_count"))
 		appInboxes  := fmt.Sprintf("%v", intVal(d, "app_inbox_count"))
 
+		if display.Output(d) { return nil }
+
 		display.Header("Account")
 		display.Table([]display.Row{
 			{Key: "Plan",        Value: planLabel + "  " + display.PlanBadge(plan)},
@@ -269,6 +286,8 @@ var usageCmd = &cobra.Command{
 		pct       := strVal(d, "percent_used")
 		credits   := fmt.Sprintf("%v", d["credits_remaining"])
 		resets    := strVal(d, "resets")
+
+		if display.Output(d) { return nil }
 
 		display.Header("Usage")
 		display.Table([]display.Row{
@@ -363,6 +382,9 @@ var inboxListCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+
+		inboxes = applyLimit(inboxes)
+		if display.Output(inboxes) { return nil }
 
 		if len(inboxes) == 0 {
 			display.Info("No inboxes registered.")
@@ -464,6 +486,7 @@ var messagesCmd = &cobra.Command{
 			if err != nil {
 				return err
 			}
+			if display.Output(msg) { return nil }
 			display.MessageContent(msg)
 			return nil
 		}
@@ -473,6 +496,9 @@ var messagesCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+
+		msgs = applyLimit(msgs)
+		if display.Output(msgs) { return nil }
 
 		if len(msgs) == 0 {
 			display.Info("No messages in this inbox.")
@@ -549,6 +575,8 @@ Requires Growth plan or above.`,
 			return err
 		}
 
+		if display.Output(result) { return nil }
+
 		otp  := strVal(result, "otp")
 		link := strVal(result, "verification_link")
 		from := strVal(result, "from")
@@ -591,6 +619,9 @@ var domainsCmd = &cobra.Command{
 			return err
 		}
 
+		domains = applyLimit(domains)
+		if display.Output(domains) { return nil }
+
 		if len(domains) == 0 {
 			display.Info("No domains available.")
 			return nil
@@ -615,6 +646,13 @@ var domainsCmd = &cobra.Command{
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
+
+func applyLimit(slice []interface{}) []interface{} {
+	if GlobalLimit > 0 && len(slice) > GlobalLimit {
+		return slice[:GlobalLimit]
+	}
+	return slice
+}
 
 func requireAuth() (*api.Client, error) {
 	client, err := api.New()

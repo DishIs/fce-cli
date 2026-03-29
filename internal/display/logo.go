@@ -7,6 +7,16 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+var (
+	// Output formatting flags globally accessible
+	GlobalFormat string = "text"
+	GlobalSilent bool   = false
+)
+
+func IsSilent() bool {
+	return GlobalSilent || GlobalFormat != "text"
+}
+
 // ── Styles ────────────────────────────────────────────────────────────────────
 
 var (
@@ -48,6 +58,7 @@ const tagline = `   FreeCustom.Email — disposable inbox API`
 
 // PrintLogo prints the full logo + wordmark on first login
 func PrintLogo() {
+	if IsSilent() { return }
 	fixedLogo := strings.ReplaceAll(logoASCII, "@@", "`")
 	logo := styleBright.Render(fixedLogo)
 	tag := styleMuted.Render(tagline)
@@ -58,6 +69,7 @@ func PrintLogo() {
 
 // PrintInlineLogo prints a compact single-line logo for command headers
 func PrintInlineLogo() {
+	if IsSilent() { return }
 	icon := styleBright.Render("◉")
 	name := styleBright.Render("fce")
 	fmt.Printf("%s %s  ", icon, name)
@@ -66,6 +78,7 @@ func PrintInlineLogo() {
 // ── Section headers ───────────────────────────────────────────────────────────
 
 func Header(title string) {
+	if IsSilent() { return }
 	bar  := styleDim.Render(strings.Repeat("─", 48))
 	head := styleAccent.Render(title)
 	fmt.Println()
@@ -77,6 +90,7 @@ func Header(title string) {
 // ── Status messages ───────────────────────────────────────────────────────────
 
 func Success(msg string) {
+	if IsSilent() { return }
 	fmt.Printf("  %s  %s\n", styleBright.Render("✓"), styleSuccess.Render(msg))
 }
 
@@ -85,14 +99,17 @@ func Error(msg string) {
 }
 
 func Warn(msg string) {
+	if IsSilent() { return }
 	fmt.Printf("  %s  %s\n", styleBright.Render("!"), styleWarn.Render(msg))
 }
 
 func Info(msg string) {
+	if IsSilent() { return }
 	fmt.Printf("  %s  %s\n", styleDim.Render("·"), styleMuted.Render(msg))
 }
 
 func Step(n int, total int, msg string) {
+	if IsSilent() { return }
 	counter := styleDim.Render(fmt.Sprintf("[%d/%d]", n, total))
 	fmt.Printf("  %s  %s\n", counter, styleMuted.Render(msg))
 }
@@ -105,6 +122,7 @@ type Row struct {
 }
 
 func Table(rows []Row) {
+	if IsSilent() { return }
 	maxKey := 0
 	for _, r := range rows {
 		if len(r.Key) > maxKey {
@@ -125,6 +143,7 @@ func Table(rows []Row) {
 // ── List ──────────────────────────────────────────────────────────────────────
 
 func List(items []string) {
+	if IsSilent() { return }
 	fmt.Println()
 	for i, item := range items {
 		n   := styleDim.Render(fmt.Sprintf("%02d", i+1))
@@ -209,6 +228,7 @@ func MessageContent(data map[string]interface{}) {
 // ── Waiting spinner (simple) ──────────────────────────────────────────────────
 
 func Waiting(msg string) {
+	if IsSilent() { return }
 	fmt.Printf("  %s  %s\n", styleDim.Render("◌"), styleMuted.Render(msg))
 }
 
@@ -224,6 +244,7 @@ func PlanGate(requiredPlan string, feature string) {
 // ── Divider ───────────────────────────────────────────────────────────────────
 
 func Divider() {
+	if IsSilent() { return }
 	fmt.Println(styleDim.Render("  " + strings.Repeat("─", 48)))
 }
 

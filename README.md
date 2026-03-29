@@ -144,6 +144,29 @@ fce watch mytest@ditmail.info
 | `fce uninstall` | Remove all local config and credentials | Any |
 | `fce version` | Show version info | Any |
 
+
+---
+
+## Automation, CI/CD & AI Agents
+
+`fce-cli` provides native support for scripting, automation, CI/CD pipelines, and agentic AI workflows. You can strictly format the output to `json` or `csv` and suppress all terminal UI components using global flags.
+
+**Global Flags:**
+* `--format`, `-f` : Set output format to `text` (default), `json`, or `csv`.
+* `--limit`, `-l` : Limit the number of results returned (0 for all).
+* `--silent`, `-s` : Suppress non-essential output (automatically enabled for json/csv).
+
+```bash
+# Get your account status in JSON format
+fce status --format json
+
+# List the last 5 emails in CSV format
+fce messages test@ditube.info --format csv --limit 5
+
+# Extract OTP silently in a CI/CD pipeline
+OTP_JSON=$(fce otp test@ditube.info --format json)
+```
+
 ### Examples
 
 ```bash
