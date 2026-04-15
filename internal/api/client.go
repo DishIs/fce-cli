@@ -195,3 +195,21 @@ func PlanLevelFor(plan string) PlanLevel {
 func HasPlan(userPlan string, required PlanLevel) bool {
 	return PlanLevelFor(userPlan) >= required
 }
+
+func (c *Client) GetTimeline(inbox string) ([]interface{}, error) {
+	result, err := c.get("/inboxes/" + inbox + "/timeline")
+	if err != nil {
+		return nil, err
+	}
+	data, _ := result["data"].([]interface{})
+	return data, nil
+}
+
+func (c *Client) GetInsights(inbox string) ([]interface{}, error) {
+	result, err := c.get("/inboxes/" + inbox + "/insights")
+	if err != nil {
+		return nil, err
+	}
+	data, _ := result["data"].([]interface{})
+	return data, nil
+}

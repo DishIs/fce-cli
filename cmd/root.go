@@ -68,6 +68,8 @@ func init() {
 	}
 
 	rootCmd.AddCommand(
+	timelineCmd,
+	insightsCmd,
 		loginCmd,
 		logoutCmd,
 		statusCmd,
@@ -362,6 +364,71 @@ Requires Startup plan or above. Emails arrive in under 200ms.`,
 }
 
 // ── fce inbox ─────────────────────────────────────────────────────────────────
+
+
+var timelineCmd = &cobra.Command{
+	Use:   "timeline <email>",
+	Short: "View the event timeline for an inbox",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		client, err := requireAuth()
+		if err != nil {
+			return err
+		}
+		inbox := args[0]
+		
+		result, err := client.GetTimeline(inbox)
+		if err != nil {
+			return fmt.Errorf("failed to get timeline: %v", err)
+		}
+		
+		if len(result) == 0 {
+			fmt.Printf("No events found for %s\n", inbox)
+			return nil
+		}
+		
+		fmt.Printf("Timeline for %s:\n", inbox)
+		for _, e := range result {
+			event := e.(map[string]interface{})
+			lat := ""
+			if val, ok := event["latency_ms"]; ok && val != nil {
+				lat = fmt.Sprintf(" (+%vms)", val)
+			}
+			fmt.Printf("- %v%s\n", event["type"], lat)
+		}
+		return nil
+	},
+}
+
+var insightsCmd = &cobra.Command{
+	Use:   "insights <email>",
+	Short: "View delivery insights and failure flags for an inbox",
+	Args:  cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		client, err := requireAuth()
+		if err != nil {
+			return err
+		}
+		inbox := args[0]
+		
+		result, err := client.GetInsights(inbox)
+		if err != nil {
+			return fmt.Errorf("failed to get insights: %v", err)
+		}
+		
+		if len(result) == 0 {
+			fmt.Printf("No issues detected for %s\n", inbox)
+			return nil
+		}
+		
+		fmt.Printf("Insights for %s:\n", inbox)
+		for _, idx := range result {
+			insight := idx.(map[string]interface{})
+			fmt.Printf("! [%v] %v\n", insight["type"], insight["message"])
+		}
+		return nil
+	},
+}
 
 var inboxCmd = &cobra.Command{
 	Use:   "inbox",

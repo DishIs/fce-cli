@@ -251,3 +251,15 @@ goreleaser build --clean --snapshot
 ## License
 
 MIT © FreeCustom.Email
+
+### Observability Commands
+
+You can view the event timeline and debug insights for any inbox directly from the CLI.
+
+```bash
+# View the event timeline and latencies
+fce timeline <email@domain.com>
+
+# View delivery insights and failure flags (Requires Growth+)
+fce insights <email@domain.com>
+```
