@@ -1,10 +1,14 @@
 {
   "name": "fcemail",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "FreeCustom.Email CLI — Manage disposable inboxes from your terminal.",
   "bin": {
     "fce": "bin/fce"
   },
+  "files": [
+    "bin/",
+    "scripts/install-binary.js"
+  ],
   "scripts": {
     "postinstall": "node scripts/install-binary.js"
   },
