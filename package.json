@@ -1,6 +1,6 @@
 {
   "name": "fcemail",
-  "version": "0.1.13",
+  "version": "0.3.0",
   "description": "FreeCustom.Email CLI — Manage disposable inboxes from your terminal.",
   "bin": {
     "fce": "bin/fce"
