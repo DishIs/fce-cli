@@ -47,44 +47,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Publish to NPM
-        run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
-          cat <<EOF > package.json
-          {
-            "name": "fcemail",
-            "version": "${VERSION}",
-            "description": "FreeCustom.Email CLI — Manage disposable inboxes from your terminal.",
-            "bin": {
-              "fce": "bin/fce"
-            },
-            "scripts": {
-              "postinstall": "node scripts/install-binary.js"
-            },
-            "repository": {
-              "type": "git",
-              "url": "git+https://github.com/DishIs/fce-cli.git"
-            },
-            "author": "DishIs",
-            "license": "MIT"
-          }
-          EOF
-          # Create a minimal install script for NPM users
-          mkdir -p bin
-          touch bin/fce
-          mkdir -p scripts
-          cat <<EOF > scripts/install-binary.js
-          const { execSync } = require('child_process');
-          const fs = require('fs');
-          const path = require('path');
-          
-          console.log('Downloading fce-cli binary...');
-          try {
-            execSync('curl -fsSL https://raw.githubusercontent.com/DishIs/fce-cli/main/scripts/install.sh | BIN_DIR=./bin sh');
-          } catch (err) {
-            console.error('Failed to download binary:', err.message);
-            process.exit(1);
-          }
-          EOF
-          npm publish --access public
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

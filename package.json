@@ -1,0 +1,17 @@
+{
+  "name": "fcemail",
+  "version": "0.2.1",
+  "description": "FreeCustom.Email CLI — Manage disposable inboxes from your terminal.",
+  "bin": {
+    "fce": "bin/fce"
+  },
+  "scripts": {
+    "postinstall": "node scripts/install-binary.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DishIs/fce-cli.git"
+  },
+  "author": "DishIs",
+  "license": "MIT"
+}
