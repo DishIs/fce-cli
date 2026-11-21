@@ -22,13 +22,16 @@ jobs:
         with:
           go-version: '1.22'
 
+      # Chocolatey packaging has failed every release since v0.2 (and
+      # continue-on-error hid it), so no GitHub release/binaries were published
+      # after v0.1.13. Skipped until the Chocolatey package is fixed; failures
+      # now stop the workflow instead of being ignored.
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
-        continue-on-error: true
         with:
           distribution: goreleaser
           version: latest
-          args: release --clean
+          args: release --clean --skip=chocolatey
         env:
           GITHUB_TOKEN: ${{ secrets.GORELEASER_PAT || secrets.GITHUB_TOKEN }}
           CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
