@@ -313,12 +313,12 @@ var watchCmd = &cobra.Command{
 
   fce watch                        Watch all registered inboxes
   fce watch random                 Watch a new random inbox (auto-registers)
-  fce watch test@junkstopper.info      Watch a specific inbox
+  fce watch test@haloforge.info      Watch a specific inbox
 
 Requires Startup plan or above. Emails arrive in under 200ms.`,
 	Example: `  fce watch
   fce watch random
-  fce watch mytest@ditube.info`,
+  fce watch mytest@haloforge.online`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		client, err := requireAuth()
 		if err != nil {
@@ -477,7 +477,7 @@ var inboxAddCmd = &cobra.Command{
 	Use:     "add <address>",
 	Aliases: []string{"register"},
 	Short:   "Register a new inbox",
-	Example: `  fce inbox add mytest@junkstopper.info
+	Example: `  fce inbox add mytest@haloforge.info
   fce inbox add random`,
 	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -535,8 +535,8 @@ var messagesCmd = &cobra.Command{
 	Use:     "messages <inbox> [id]",
 	Aliases: []string{"msgs", "mail"},
 	Short:   "List messages in an inbox or view a specific message",
-	Example: `  fce messages mytest@junkstopper.info
-  fce messages mytest@junkstopper.info u7hPpV5sA`,
+	Example: `  fce messages mytest@haloforge.info
+  fce messages mytest@haloforge.info u7hPpV5sA`,
 	Args:    cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		client, err := requireAuth()
@@ -614,7 +614,7 @@ var otpCmd = &cobra.Command{
 OTP is extracted automatically — no regex needed.
 
 Requires Growth plan or above.`,
-	Example: `  fce otp mytest@junkstopper.info`,
+	Example: `  fce otp mytest@haloforge.info`,
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		client, err := requireAuth()
@@ -747,9 +747,12 @@ func intVal(m map[string]interface{}, key string) int {
 }
 
 // randomInbox generates a random inbox address using a free-tier domain
+// Live free-tier domains (see GET /v1/domains). The old ditube/junkstopper/
+// ditapi/ditgame/ditplay/ditcloud domains expired in 2026 and no longer
+// receive mail; the API refuses new inboxes on them.
 var randomDomains = []string{
-	"ditube.info", "junkstopper.info", "ditapi.info",
-	"ditgame.info", "ditplay.info", "ditcloud.info",
+	"lumenbay.info", "haloforge.online", "haloforge.info",
+	"echoharbor.in", "sqlcompiler.info",
 }
 
 var adjectives = []string{

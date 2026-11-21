@@ -118,7 +118,7 @@ fce login
 fce watch random
 
 # 3. Or watch a specific one
-fce watch mytest@ditmail.info
+fce watch mytest@lumenbay.info
 ```
 
 ---
@@ -161,10 +161,10 @@ fce watch mytest@ditmail.info
 fce status --format json
 
 # List the last 5 emails in CSV format
-fce messages test@ditube.info --format csv --limit 5
+fce messages test@haloforge.online --format csv --limit 5
 
 # Extract OTP silently in a CI/CD pipeline
-OTP_JSON=$(fce otp test@ditube.info --format json)
+OTP_JSON=$(fce otp test@haloforge.online --format json)
 ```
 
 ### Examples
@@ -175,10 +175,10 @@ fce inbox add random
 fce watch random
 
 # Watch a specific inbox (Startup plan+)
-fce watch alerts@ditmail.info
+fce watch alerts@lumenbay.info
 
 # Get the latest OTP (Growth plan+)
-fce otp mytest@ditmail.info
+fce otp mytest@lumenbay.info
 
 # Check quota
 fce usage
